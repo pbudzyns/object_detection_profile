@@ -22,7 +22,7 @@ def profiler_wrapper(f: Callable, name: str) -> Callable:
     def wrapped(*args, **kwargs):
         t = perf_counter()
         res = f(*args, **kwargs)
-        print(f"[{name}]\tcompleted in", perf_counter() - t, "ms")
+        print(f"[{name}]\tcompleted in", (perf_counter() - t) * 1000, "ms")
         return res
     return wrapped
 
@@ -58,7 +58,7 @@ class Profiler(abc.ABC):
 
         t = perf_counter()
         res = self.forward(*args, **kwargs)
-        elapsed = perf_counter() - t
+        elapsed = (perf_counter() - t) * 1000
         print(
             f"[{self.__class__.__name__}.__call__]\tcompleted in",
             elapsed,
